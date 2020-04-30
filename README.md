@@ -88,3 +88,23 @@ export default {
 </style>
 
 ```
+## 4.常用git命令
+``` js
+    git clone [url] // 克隆代码
+    
+    git status //查看当前有变更的文件
+
+    git branch //列出本地所有分支
+
+    git checkout -b [branchname] //新建一个分支，并切换到该分支
+    
+    git add [file1] [file2] //添加指定文件至暂存区
+    
+    git add . //添加当前目录所有文件至暂存区
+    
+    git commit -m [message] //提交暂存区到仓库区
+    
+    git pull origin master // 从origin仓库的master分支拉取代码
+    
+    git push origin master // 向origin仓库的master分支提交代码
+```
