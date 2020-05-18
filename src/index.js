@@ -12,8 +12,13 @@ import App from './App'
 import './style/index.css'
 import './style/styleConfig.scss'
 
-import ECharts from 'vue-echarts'
+// 将自动注册所有组件为全局组件
+import dataV from '@jiaminghi/data-view'
 
+Vue.use(dataV)
+
+
+import ECharts from 'vue-echarts'
 
 import 'echarts/lib/chart/line'
 import 'echarts/lib/chart/pie'
@@ -34,28 +39,28 @@ import store from './store/index.js'
 Vue.config.productionTip = false
 
 
-/**
- * 以下是ajax拦截
- */
-import QS from 'qs'
-import axios from 'axios'
+// /**
+//  * 以下是ajax拦截
+//  */
+// import QS from 'qs'
+// import axios from 'axios'
 
-//设置ajax根路径
-axios.interceptors.request.use(config => {
-		//token加入请求头
-		config.headers = {
-			'Content-Type': 'application/x-www-form-urlencoded'
-		}
-		if(config.method === 'post'){
-			config.data = QS.stringify({
-				...config.data,
-			})
-		}
-		return config;
+// //设置ajax根路径
+// axios.interceptors.request.use(config => {
+// 		//token加入请求头
+// 		config.headers = {
+// 			'Content-Type': 'application/x-www-form-urlencoded'
+// 		}
+// 		if(config.method === 'post'){
+// 			config.data = QS.stringify({
+// 				...config.data,
+// 			})
+// 		}
+// 		return config;
 
-	},error => {
-		throw error
-});
+// 	},error => {
+// 		throw error
+// });
 
 
 

@@ -3,7 +3,6 @@
 /**
  * 首页
  */
-
 import homePage from '@/pages/home.vue'
 
 const homeModule = [
@@ -13,9 +12,6 @@ const homeModule = [
         component: homePage,
     },
 ]
-
-
-
 
 /**
  * 重定向

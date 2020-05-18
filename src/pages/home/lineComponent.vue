@@ -10,7 +10,7 @@ export default {
             default(){
                 return {}
             }
-        }
+        },
     },
     computed: {
         lineOptions(){
