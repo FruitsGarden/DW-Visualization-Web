@@ -12,6 +12,10 @@ import App from './App'
 import './style/index.css'
 import './style/styleConfig.scss'
 
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(ElementUI);
+
 // 将自动注册所有组件为全局组件
 import dataV from '@jiaminghi/data-view'
 

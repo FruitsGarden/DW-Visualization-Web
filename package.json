@@ -13,6 +13,7 @@
     "@jiaminghi/data-view": "^2.8.3",
     "axios": "^0.19.2",
     "echarts": "^4.7.0",
+    "element-ui": "^2.13.2",
     "localscrollfix": "^2.2.0",
     "qs": "^6.9.3",
     "vue": "^2.5.2",
