@@ -24,11 +24,3 @@ window.router = new Router({
 export default router
 
 
-var uv_data  = {
-    day: [
-        {time: '2010-05-18', value: 100},
-        {time: '2010-05-17', value: 100},
-        {time: '2010-05-16', value: 100},
-        {time: '2010-05-15', value: 100},
-    ]
-}

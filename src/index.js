@@ -27,6 +27,8 @@ import ECharts from 'vue-echarts'
 import 'echarts/lib/chart/line'
 import 'echarts/lib/chart/pie'
 import 'echarts/lib/chart/bar'
+import 'echarts/lib/chart/funnel'
+import 'echarts/lib/chart/map'
 
 import 'echarts/lib/component/title'; //引入标题组件
 import 'echarts/lib/component/legend'; //引入图例组件
@@ -35,6 +37,7 @@ import 'echarts/lib/component/toolbox'; //引入图例组件
 
 Vue.component('chart', ECharts)
 
+import './pages/components/index.js'
 
 import router from './router/index.js'
 
