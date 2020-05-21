@@ -94,8 +94,15 @@ export default {
     },
     methods: {
         async getData(){
-            await homeService.getAreaData().then(data =>{
-                this.mapData = data
+
+            await Promise.all([
+                homeService.getActiveTotalData(date),
+                homeService.getRetainData(startDate, endDate),
+                homeService.getConvertData(date),
+                homeService.getGMVData(startDate, endDate),
+                homeService.getAreaData()
+            ]).then(data =>{
+                this.mapData = data[4]
             })
         },
         startTime(){

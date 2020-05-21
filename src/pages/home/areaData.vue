@@ -1,5 +1,5 @@
 <template>
-    <div style="height: calc(100vh - 65px);width: 100%;">
+    <div style="height: calc(100vh - 65px);width: 100%;" v-loading="is_loading">
         <area-component :areaData="mapData"></area-component>
     </div>
 </template>
@@ -13,14 +13,32 @@ export default {
     },
     data(){
         return {
+            is_loading: false,
             mapData: []
         }
     },
     methods: {
         async getData(){
-            await homeService.getAreaData().then(data =>{
-                this.mapData = data
-            })
+            try{
+                this.is_loading = true
+                await homeService.getAreaData().then(data =>{
+                    this.mapData = data.data
+                }).catch(error =>{
+                     this.$message({
+                        type: 'error',
+                        message: error.message
+                    })
+                    this.is_loading = false
+                }).finally(() =>{
+                    this.is_loading = false
+                })
+            } catch(error){
+                this.$message({
+                    type: 'error',
+                    message: error.message
+                })
+            } 
+            
         }
     },
     async mounted(){

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-loading="is_loading" style="min-height: 100vh; width: 100%;">
         <div style="width: 1200px;margin: 0 auto;padding: 20px 0;">
             <el-date-picker
             v-model="value1"
@@ -29,8 +29,9 @@ export default {
     },
     data(){
         return {
+            is_loading: false,
             value1: '',
-            currentDate: '',
+            currentDate: '2020-05-04',
             activeTotalData:[]
         }
     },
@@ -41,13 +42,29 @@ export default {
             await this.getData()
         },
         async getData(){
-            await homeService.getConvertData(this.currentDate).then(data =>{
-                this.activeTotalData = data
-            })
+            try{
+                this.is_loading = true
+                await homeService.getConvertData(this.currentDate).then(data =>{
+                    this.activeTotalData = data.data
+                }).catch(error =>{
+                     this.$message({
+                        type: 'error',
+                        message: error.message
+                    })
+                    this.is_loading = false
+                }).finally(() =>{
+                    this.is_loading = false
+                })
+            } catch(error){
+                this.$message({
+                    type: 'error',
+                    message: error.message
+                })
+            }  
         }
     },
     async mounted(){
-        this.currentDate =  $utils.formatDate(new Date(), 'yyyy-MM-dd')
+        // this.currentDate =  $utils.formatDate(new Date(), 'yyyy-MM-dd')
         console.log('初始化'+this.currentDate)
         await this.getData()
     }

@@ -1,5 +1,5 @@
 <template>
-    <div style="margin-top: 100px;">
+    <div style="margin-top: 100px;min-height: 100vh; width: 100%;" v-loading="is_loading">
         <el-form :inline="true" style="width: 1200px;margin: 0 auto;padding: 20px 0;">
             <el-form-item label="时间范围">
                 <el-date-picker
@@ -32,6 +32,7 @@ export default {
     },
     data(){
         return {
+            is_loading: false,
             value1: '',
             startDate: '',
             endDate: '',
@@ -52,9 +53,26 @@ export default {
             await this.getData(this.startDate, this.endDate)
         },
         async getData(startDate, endDate){
-            await homeService.getGMVData(startDate, endDate).then(data =>{
-                this.lineData = data
-            })
+            try{
+                this.is_loading = true
+                await homeService.getGMVData(startDate, endDate).then(data =>{
+                    this.lineData = data.data
+                }).catch(error =>{
+                     this.$message({
+                        type: 'error',
+                        message: error.message
+                    })
+                    this.is_loading = false
+                }).finally(() =>{
+                    this.is_loading = false
+                })
+            } catch(error){
+                this.$message({
+                    type: 'error',
+                    message: error.message
+                })
+            } 
+            
         }
     },
     async mounted(){

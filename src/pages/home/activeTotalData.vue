@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-loading="is_loading" style="min-height: 100vh; width: 100%;">
         <div style="width: 1200px;margin: 0 auto;padding: 20px 0;">
             <el-date-picker
             v-model="value1"
@@ -35,8 +35,9 @@ export default {
     },
     data(){
         return {
+            is_loading: false,
             value1: '',
-            currentDate: '',
+            currentDate: '2020-05-04',
             activeTotalData: {
                 wkCount: {totalData: 0},
                 monCount: {totalData: 0},
@@ -53,23 +54,57 @@ export default {
     methods: {
         async changeActiveData(type){
             let typename = this.dailType[type]
-            await homeService.getActiveData(this.currentDate, type).then(data =>{
-                this.activeLineData = {
-                    data: data,
-                    key: type,
-                    name: typename,
-                }
-            })
+            try{
+                this.is_loading = true
+                await homeService.getActiveData(this.currentDate, type).then(data =>{
+                    this.activeLineData = {
+                        data: data.data,
+                        key: type,
+                        name: typename,
+                    }
+                }).catch(error =>{
+                     this.$message({
+                        type: 'error',
+                        message: error.message
+                    })
+                    this.is_loading = false
+                }).finally(() =>{
+                    this.is_loading = false
+                })
+            } catch(error){
+                this.$message({
+                    type: 'error',
+                    message: error.message
+                })
+            }   
+            
         },
         async getActiveTotalData(){
-            await homeService.getActiveTotalData(this.currentDate).then(data =>{
-                this.activeTotalData = data.reduce((obj, item, index) =>{
-                    return {
-                        ...obj,
-                        [item.id]: item,
-                    }
-                },{}) 
-            })
+            try{
+                this.is_loading = true
+                await homeService.getActiveTotalData(this.currentDate).then(data =>{
+                    this.activeTotalData = data.data.reduce((obj, item, index) =>{
+                        return {
+                            ...obj,
+                            [item.id]: item,
+                        }
+                    },{}) 
+                }).catch(error =>{
+                     this.$message({
+                        type: 'error',
+                        message: error.message
+                    })
+                    this.is_loading = false
+                }).finally(() =>{
+                    this.is_loading = false
+                })
+            } catch(error){
+                this.$message({
+                    type: 'error',
+                    message: error.message
+                })
+            }  
+            
         },
         async refreshData(){
             this.currentDate = this.value1;
@@ -79,7 +114,7 @@ export default {
         }
     },
     async mounted(){
-        this.currentDate =  $utils.formatDate(new Date(), 'yyyy-MM-dd')
+        // this.currentDate =  $utils.formatDate(new Date(), 'yyyy-MM-dd')
         console.log('初始化'+this.currentDate)
         await this.getActiveTotalData()
         await this.changeActiveData('dayCount')

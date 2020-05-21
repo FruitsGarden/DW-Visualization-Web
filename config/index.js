@@ -11,13 +11,13 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      // '/': {
-			//   target: 'https://staffh5.sy365.cn/', // 接口的域名
-			//   changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
-			//   pathRewrite: {
-			//       '^/': ''   //需要rewrite的,
-			//   }
-			// },
+      '/': {
+			  target: 'http://1i497f8839.51mypc.cn:44223/', // 接口的域名
+			  changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
+			  pathRewrite: {
+			      '^/': ''   //需要rewrite的,
+			  }
+			},
     },
 
     // Various Dev Server settings

@@ -61,14 +61,28 @@ export default {
                     }
                 },
                 dataRange: {
-                    show: false,
+                    show: true,
                     min: 0,
-                    max: 1000,
-                    text: ['High', 'Low'],
+                    max: 50000,
+                    // text: ['High', 'Low'],
+                    splitNumber: 5,
+                    // splitList: [
+                    //     {start: 0},
+                    //     {start: 0, end: 1000,label :'xiao'},
+                    //     {start: 1000, end: 2000, label: 'da'},
+                    //     {start: 6000, end: 1000, label: 'ssss'},
+                    //     {start: 10000, end: 20000, label: '10 到 200（自定义label）'},
+                    //     {end: 20000}
+                    // ],
+ 
                     realtime: true,
-                    calculable: true,
-                    color: ['#00baff', 'yellow', 'lightskyblue']
+                    color: ['orange', 'yellow', 'lightskyblue','red']
                 },
+                // legend: {
+                //     orient: 'vertical',
+                //     x:'left',
+                //     data:['销量top']
+                // },
                 geo: { // 这个是重点配置区
                     map: 'china', // 表示中国地图
                     roam: this.isRoam,

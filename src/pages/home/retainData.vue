@@ -1,6 +1,6 @@
 <template>
-    <div class="retainBox">
-        <el-form :inline="true" style="padding: 20px 0;">
+    <div class="retainBox" style="min-height: calc(100vh - 64px); width: 100%;" v-loading="is_loading">
+        <el-form :inline="true" style="padding: 20px 100px">
             <el-form-item label="时间范围">
                 <el-date-picker
                     v-model="value1"
@@ -18,7 +18,7 @@
         </el-form>
         
         <el-table
-            :data="tableData"
+            :data="currentTableData"
             style="width: 100%"
             :row-class-name="tableRowClassName">
             <el-table-column prop="create_date" label="时间" width="180" align="center"></el-table-column>
@@ -32,8 +32,12 @@
         </el-table>
         <el-pagination
             background
+            @current-change="handleCurrentPage"
+            @prev-click="prevAndNextClick"
+            @next-click="prevAndNextClick"
+            :page-size="10"
             layout="prev, pager, next"
-            :total="1000"></el-pagination>
+            :total="totalPage"></el-pagination>
     </div>
 </template>
 
@@ -43,13 +47,34 @@ import {$utils} from '@/utils/index.js'
 export default {
     data(){
         return {
+            is_loading: false,
             value1: '',
+            totalPage: 0,
+            currentTableData: [],
             tableData: [],
             startDate: '',
             endDate: '',
         }
     },
     methods: {
+        /**
+         * 前进后退
+         */
+        prevAndNextClick(val){
+            console.log(val)
+            let start = (val -1 ) * 10 ,
+                end = val * 10
+            this.currentTableData = this.tableData.slice(start, end)
+        },
+        /**
+         * 切换页码
+         */
+        async handleCurrentPage(val){
+            console.log(val)
+            let start = (val -1 ) * 10 ,
+                end = val * 10
+            this.currentTableData = this.tableData.slice(start, end)
+        },
         tableRowClassName({row, rowIndex}) {
             if (rowIndex %2  == 1) {
                 return 'success-row';
@@ -64,9 +89,28 @@ export default {
             await this.getData(this.startDate, this.endDate)
         },
         async getData(startDate, endDate){
-            await homeService.getRetainData(startDate, endDate).then(data =>{
-                this.tableData = data
-            })  
+            try{
+                this.is_loading = true
+                await homeService.getRetainData(startDate, endDate).then(data =>{
+                    this.tableData = data.data
+                    this.totalPage = this.tableData.length
+                    this.currentTableData = this.tableData.slice(0, 10)
+                }).catch(error =>{
+                     this.$message({
+                        type: 'error',
+                        message: error.message
+                    })
+                    this.is_loading = false
+                }).finally(() =>{
+                    this.is_loading = false
+                })
+            } catch(error){
+                this.$message({
+                    type: 'error',
+                    message: error.message
+                })
+            }  
+            
         }
     },
     async mounted(){
