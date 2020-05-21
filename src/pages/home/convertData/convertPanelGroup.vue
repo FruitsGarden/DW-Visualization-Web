@@ -1,5 +1,5 @@
 <template>
-    <div style="max-width: 1200px;margin: 0 auto">
+    <div style="max-width: 1000px;margin: 0 auto">
         <el-row :gutter="40" class="panel-group">
             <el-col :span="8" class="card-panel-col" 
                 v-for="(item, index) in convertData"

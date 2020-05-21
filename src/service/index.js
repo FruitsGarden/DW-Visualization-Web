@@ -114,5 +114,33 @@ export const homeService = {
         //     {name: '深圳', remark: '', value: 50000},
         //     {name: '湖北', remark: '', value: 50000},
         // ])
+    },
+    /**
+     * 用户新鲜度
+     * @param {*} date 
+     */
+    getUserConvertCount(date){
+        return axios.get(apiPathList.getUserConvertCount+`?date=${date}`)
+    },
+    /**
+     * 每日新增设备
+     * @param {*} date 
+     */
+    getNewMidCount(date){
+        return axios.get(apiPathList.getNewMidCount+`?date=${date}`)
+    },
+    /**
+     * 沉默用户
+     * @param {*} date 
+     */
+    getSilentCount(date){
+        return axios.get(apiPathList.getSilentCount+`?date=${date}`)
+    },
+    /**
+     * 流失用户
+     * @param {*} date 
+     */
+    getWastageCount(date){
+        return axios.get(apiPathList.getWastageCount+`?date=${date}`)
     }
 }

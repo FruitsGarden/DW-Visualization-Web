@@ -1,45 +1,68 @@
 <template>
-  <div class="left-chart-1">
-    <div class="lc1-header">张三收费站</div>
-    <div class="lc1-details">设备运行总数<span>430</span></div>
-    <dv-capsule-chart class="lc1-chart" :config="config" />
-    <dv-decoration-2 style="height:10px;" />
-  </div>
+	<div class="left-chart-1">
+		<div class="lc1-header">用户活跃量</div>
+		<div class="card-panel"
+			v-for="(item, index) in activeTotalDataList"
+			:key="index">
+			<div class="card-panel-icon-wrapper icon-people">
+				<img :src="item.imgUrl" alt="">
+			</div>
+			<div class="card-panel-description">
+				<div class="card-panel-text">
+					{{item.title}}
+				</div>
+				<count-to 
+					v-if="item.totalData" 
+					:start-val="0" 
+					:end-val="item.totalData" :duration="2600" class="card-panel-num" />
+			</div>
+		</div>
+		<dv-decoration-2 style="height:10px;" />
+	</div>
 </template>
 
 <script>
+import CountTo from 'vue-count-to'
+import day1 from './img/day1.svg'
+import week7 from './img/week7.svg'
+import month31 from './img/month31.svg'
+
 export default {
-  name: 'LeftChart1',
-  data () {
-    return {
-      config: {
-        data: [
-          {
-            name: '收费系统',
-            value: 167
-          },
-          {
-            name: '通信系统',
-            value: 67
-          },
-          {
-            name: '监控系统',
-            value: 123
-          },
-          {
-            name: '供配电系统',
-            value: 55
-          },
-          {
-            name: '其他',
-            value: 98
-          }
-        ],
-        colors: ['#00baff', '#3de7c9', '#fff', '#ffc530', '#469f4b'],
-        unit: '件'
-      }
-    }
-  }
+	components: {
+		CountTo,
+	},
+	name: 'LeftChart1',
+	data () {
+		return {
+			week7,
+			month31,
+			day1,
+		}
+	},
+	computed: {
+		activeTotalDataList(){
+			return this.activeTotalData.map(item =>{
+				let imgUrl = ''
+				if(item.id == 'dayCount'){
+					imgUrl = day1
+				} else if(item.id == 'wkCount'){
+					imgUrl = week7
+				} else {
+					imgUrl = month31
+				}
+				return {
+					...item, 
+					imgUrl :  imgUrl
+				}
+			})
+		}
+	},
+	props: {
+		activeTotalData: {
+			type: Array,
+			default: []
+		}
+	}
 }
 </script>
 
@@ -59,25 +82,6 @@ export default {
     align-items: center;
     font-size: 30px;
     margin-bottom: 20px;
-  }
-
-  .lc1-details {
-    height: 50px;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    text-indent: 20px;
-
-    span {
-      color: #096dd9;
-      font-weight: bold;
-      font-size: 35px;
-      margin-left: 20px;
-    }
-  }
-
-  .lc1-chart {
-    flex: 1;
   }
 }
 </style>

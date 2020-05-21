@@ -63,10 +63,10 @@ export default {
             lineData:{},
             menuList: [
                 {class: 'el-icon-pie-chart', text: '活动统计', index: '1-1', component: 'activeTotalData'},
-                {class: 'el-icon-pie-chart', text: '留存率统计', index: '1-2', component: 'retainData'},
-                {class: 'el-icon-pie-chart', text: '转化率统计', index: '1-3', component: 'convertData'},
-                {class: 'el-icon-pie-chart', text: 'GMV展示', index: '1-4', component: 'GMVData'},
-                {class: 'el-icon-pie-chart', text: '地区统计', index: '1-5', component: 'areaData'},
+                {class: 'el-icon-document', text: '留存率统计', index: '1-2', component: 'retainData'},
+                {class: 'el-icon-refresh', text: '转化率统计', index: '1-3', component: 'convertData'},
+                {class: 'el-icon-s-data', text: 'GMV展示', index: '1-4', component: 'GMVData'},
+                {class: 'el-icon-location-outline', text: '地区统计', index: '1-5', component: 'areaData'},
             ],
             currentTabComponent: 'activeTotalData',
         }

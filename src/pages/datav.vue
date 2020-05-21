@@ -7,9 +7,9 @@
 
             <dv-border-box-1 class="main-container">
                 <dv-border-box-3 class="left-chart-container">
-                    <Left-Chart-1 />
-                    <Left-Chart-2 />
-                    <Left-Chart-3 />
+                    <Left-Chart-1 :activeTotalData="activeTotalData" /> 
+                    <Left-Chart-2 :mapData="mapData"/>
+                    <Left-Chart-3 :configData="configData"/>
                 </dv-border-box-3>
 
                 <div class="right-main-container">
@@ -21,21 +21,22 @@
                         <div class="rmctc-right-container">
                             <dv-border-box-3 class="rmctc-chart-1">
                                 <div>
-                                    <div style="height: 60px;width: 100%;color: #fff;fontSize: 30px;padding: 20px 0;text-indent: 40px;">今天是</div>
-                                <div style="height: 60px;width: 100%;color: #fff;fontSize: 30px;padding: 20px 0;text-indent: 40px;">{{currentDate}}</div>
+                                    <div class="date-text">今天是&nbsp;&nbsp;&nbsp;{{currentDate}}</div>
+                                    <div class="date-text" v-if="gmvData.length">成交量&nbsp;&nbsp;&nbsp;{{gmvData[0].gmv_count}}&nbsp;件</div>
+                                    <div class="date-text" v-if="gmvData.length">成交额&nbsp;&nbsp;&nbsp;{{gmvData[0].gmv_amount}}&nbsp;元</div>
                                 </div>
                                 
                                 
                             </dv-border-box-3>
                             <dv-border-box-4 class="rmctc-chart-2" :reverse="true">
-                                <Right-Chart-1 />
+                                <Right-Chart-1 :convertData="convertData" />
                             </dv-border-box-4>
                         </div>
                     </div>
                     <dv-border-box-4 class="rmc-bottom-container">
                         <!-- <Bottom-Charts /> -->
                         <div style="padding: 20px;width:100%;height:100%">
-                            <dv-scroll-board :config="config"/>
+                            <dv-scroll-board :config="retainData"/>
                         </div>
                         
                     </dv-border-box-4>
@@ -58,6 +59,8 @@ import RightChart2 from './datav/RightChart2'
 
 import BottomCharts from './datav/BottomCharts'
 import areaComponent from './home/areaData/areaComponent.vue'
+
+import CountTo from 'vue-count-to'
 export default {
     name: 'DataView',
     components: {
@@ -69,51 +72,66 @@ export default {
         RightChart2,
         BottomCharts,
         areaComponent,
+        CountTo,
     },
     data () {
         return {
             mapData: [],
             timer: '',
             currentDate: '',
-            config: {
-                header: ['列1', '列2', '列3'],
-                data: [
-                    ['行1列1', '行1列2', '行1列3'],
-                    ['行2列1', '行2列2', '行2列3'],
-                    ['行3列1', '行3列2', '行3列3'],
-                    ['行4列1', '行4列2', '行4列3'],
-                    ['行5列1', '行5列2', '行5列3'],
-                    ['行6列1', '行6列2', '行6列3'],
-                    ['行7列1', '行7列2', '行7列3'],
-                    ['行8列1', '行8列2', '行8列3'],
-                    ['行9列1', '行9列2', '行9列3'],
-                    ['行10列1', '行10列2', '行10列3']
-                ],
+            activeTotalData: [],
+            convertData: [],
+            configData:[],
+            gmvData: [],
+            retainData: {
+                header: ['时间', '新增用户', '一天后', '两天后', '三天后', '四天后', '五天后','六天后',],
+                data: [],
             }
         }
     },
     methods: {
         async getData(){
-
+            let date = '2020-05-04',
+                startDate = '2020-05-04',
+                endDate = '2020-05-04';
             await Promise.all([
                 homeService.getActiveTotalData(date),
-                homeService.getRetainData(startDate, endDate),
                 homeService.getConvertData(date),
-                homeService.getGMVData(startDate, endDate),
-                homeService.getAreaData()
+                homeService.getAreaData(),
+                homeService.getRetainData(),
+                homeService.getGMVData(),
+
+                homeService.getUserConvertCount(date),
+                homeService.getNewMidCount(date),
+                homeService.getSilentCount(date),
+                homeService.getWastageCount(date),
             ]).then(data =>{
-                this.mapData = data[4]
+                console.log(data)
+                //用户活跃数据
+                this.activeTotalData = data[0].data
+                //转化率数据
+                this.convertData = data[1].data
+                //地图数据
+                this.mapData = data[2].data
+                //底部动态列表
+                let bottomList = data[3].data.map((item, index) =>{
+                    return Object.values(item).map(it =>{
+                        return it.toString()
+                    })
+                })
+                this.retainData = {
+                    header: ['时间', '新增用户', '一天后', '两天后', '三天后', '四天后', '五天后','六天后',],
+                    data: bottomList,
+                    index: true,
+                }
+                this.gmvData = data[4].data
+                this.configData = data[8].data
             })
         },
         startTime(){
             var today=new Date();
             return `${today.getFullYear()}年${today.getMonth()+1}月${today.getDate()}日`
         }
-
-//             document.getElementById('txt').innerHTML=strDate;
-//             t=s
-//             }
-
     },
     async mounted(){
         this.currentDate = this.startTime()
@@ -194,5 +212,82 @@ export default {
         .rmctc-chart-2 {
             height: 60%;
         }
+    }
+
+
+    .card-panel {
+        height: 108px;
+        cursor: pointer;
+        font-size: 12px;
+        position: relative;
+        overflow: hidden;
+        color: #fff;
+        border: 1px solid #fff;
+        // background: #fff;
+        box-shadow: 4px 4px 40px rgba(0, 0, 0, .05);
+        border-color: rgba(0, 0, 0, .05);
+
+        .icon-people {
+            color: #34bfa3
+        //   color: #40c9c6;
+        }
+
+        .icon-message {
+            color: #f4516c;
+        
+        }
+
+        .icon-money {
+            color: #36a3f7;
+        }
+
+        .icon-shopping {
+        
+        }
+
+        .card-panel-icon-wrapper {
+            float: left;
+            margin: 14px 0 0 14px;
+            padding: 16px;
+            transition: all 0.38s ease-out;
+            border-radius: 6px;
+            img{
+                height: 48px;
+                width: 48px;
+                }
+            }
+
+            .card-panel-icon {
+            float: left;
+            font-size: 48px;
+            }
+
+            .card-panel-description {
+            float: right;
+            font-weight: bold;
+            margin: 26px;
+            margin-left: 0px;
+
+            .card-panel-text {
+                line-height: 18px;
+                color: #fff;
+                font-size: 16px;
+                margin-bottom: 12px;
+            }
+
+            .card-panel-num {
+                font-size: 20px;
+            }
+        }
+    }
+
+
+    .date-text{
+        height: 60px;
+        width: 100%;
+        color: #fff;
+        font-size: 30px;
+        padding: 20px 0;
+        text-indent: 40px;
     }
 </style>

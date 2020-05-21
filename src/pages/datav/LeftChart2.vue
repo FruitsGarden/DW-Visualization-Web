@@ -1,46 +1,61 @@
 <template>
   <div class="left-chart-2">
-    <div class="lc2-header">李四收费站</div>
-    <div class="lc2-details">设备运行总数<span>245</span></div>
-    <dv-charts class="lc2-chart" :option="option" />
+    <div class="lc2-header">各省订单占比</div>
+    <!-- <div class="lc2-details">设备运行总数<span>245</span></div> -->
+    <dv-charts v-if="mapData.length" class="lc2-chart" :option="mapDataList" />
     <dv-decoration-2 style="height:10px;" />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'LeftChart2',
-  data () {
-    return {
-      option: {
-        series: [
-          {
-            type: 'pie',
-            data: [
-              { name: '收费系统', value: 93 },
-              { name: '通信系统', value: 32 },
-              { name: '监控系统', value: 65 },
-              { name: '供配电系统', value: 44 },
-              { name: '其他', value: 52 }
-            ],
-            radius: ['45%', '65%'],
-            insideLabel: {
-              show: false
-            },
-            outsideLabel: {
-              labelLineEndLength: 10,
-              formatter: '{percent}%\n{name}',
-              style: {
-                fontSize: 14,
-                fill: '#fff'
-              }
-            }
-          }
-        ],
-        color: ['#00baff', '#3de7c9', '#fff', '#ffc530', '#469f4b']
-      }
-    }
-  }
+	name: 'LeftChart2',
+	data () {
+		return {
+
+		}
+	},
+	props: {
+		mapData: {
+			type: Array,
+			default(){
+				return []
+			}
+		}
+	},
+	watch: {
+		mapData: function(val, oldVal){
+			console.log(val, oldVal)
+		}
+	},
+	computed: {
+		mapDataList(){
+			if(this.mapData.length == 0){
+				return null
+			}
+			return {
+				series: [
+					{
+						type: 'pie',
+						data: this.mapData,
+						radius: ['45%', '65%'],
+						insideLabel: {
+							show: false
+						},
+						outsideLabel: {
+							labelLineEndLength: 10,
+							formatter: '{percent}%\n{name}',
+							style: {
+								fontSize: 14,
+								fill: '#fff'
+							}
+						}
+					}
+				],
+				color: ['#00baff', '#3de7c9', '#fff', '#ffc530', '#469f4b']
+			}
+		}
+	}
 }
 </script>
 

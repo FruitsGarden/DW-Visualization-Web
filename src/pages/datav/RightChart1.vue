@@ -1,42 +1,41 @@
 <template>
-  <div class="right-chart-1">
-    <div class="rc1-header">订单转化率</div>
+	<div class="right-chart-1">
+		<div class="rc1-header">订单转化率</div>
 
-    <div class="rc1-chart-container">
-      <div class="left">
-        <div class="number">15</div>
-        <div>成交总数</div>
-      </div>
+		<div class="rc1-chart-container">
+			<div class="left">
+				<div class="number" v-if="convertData.length">{{convertData[2].value}}</div>
+				<div>成交总数</div>
+			</div>
 
-      <dv-capsule-chart class="right" :config="config" />
-    </div>
-  </div>
+			<dv-capsule-chart class="right" :config="convertDataList" />
+		</div>
+	</div>
 </template>
 
 <script>
 export default {
-  name: 'RightChart1',
-  data () {
-    return {
-      config: {
-        data: [
-          {
-            name: '浏览量',
-            value: 100
-          },
-          {
-            name: '下单量',
-            value: 30
-          },
-          {
-            name: '成交量',
-            value: 15
-          },
-        ],
-        unit: '单'
-      }
-    }
-  }
+	name: 'RightChart1',
+	data () {
+		return {
+
+		}
+	},
+	computed: {
+		convertDataList(){
+			return {
+				data: this.convertData
+			}
+		}
+	},
+	props: {
+		convertData: {
+			type: Array,
+			default: function(){
+				return []
+			}
+		}
+	}
 }
 </script>
 

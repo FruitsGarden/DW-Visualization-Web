@@ -1,6 +1,6 @@
 <template>
     <div style="margin-top: 100px;min-height: 100vh; width: 100%;" v-loading="is_loading">
-        <el-form :inline="true" style="width: 1200px;margin: 0 auto;padding: 20px 0;">
+        <el-form :inline="true" style="max-width: 1000px;margin: 0 auto;padding: 20px 0;">
             <el-form-item label="时间范围">
                 <el-date-picker
                     v-model="value1"

@@ -1,6 +1,6 @@
 <template>
     <div v-loading="is_loading" style="min-height: 100vh; width: 100%;">
-        <div style="width: 1200px;margin: 0 auto;padding: 20px 0;">
+        <div style="width:80%;max-width: 1000px;margin: 0 auto;padding: 20px 0;">
             <el-date-picker
             v-model="value1"
             format="yyyy 年 MM 月 dd 日"
