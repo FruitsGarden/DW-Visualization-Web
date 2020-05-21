@@ -1,6 +1,15 @@
 <template>
     <div>
-
+        <div style="width: 1200px;margin: 0 auto;padding: 20px 0;">
+            <el-date-picker
+            v-model="value1"
+            format="yyyy 年 MM 月 dd 日"
+            value-format="yyyy-MM-dd"
+            type="date"
+            placeholder="选择日期"></el-date-picker>
+            <el-button type="primary" @click="refreshData">刷新</el-button>
+        </div>
+        
         <panel-group 
             @handleSetLineChartData="changeActiveData"
             :activeLineData="activeLineData"
@@ -18,6 +27,7 @@
 import panelGroup from './activeTotalData/panelGroup.vue'
 import {lineComponent} from '@/pages/components/index.js'
 import {homeService} from '@/service/index.js'
+import {$utils} from '@/utils/index.js'
 export default {
     components: {
         panelGroup,
@@ -25,6 +35,8 @@ export default {
     },
     data(){
         return {
+            value1: '',
+            currentDate: '',
             activeTotalData: {
                 wkCount: {totalData: 0},
                 monCount: {totalData: 0},
@@ -41,24 +53,35 @@ export default {
     methods: {
         async changeActiveData(type){
             let typename = this.dailType[type]
-            await homeService.getActiveData(0, type).then(data =>{
+            await homeService.getActiveData(this.currentDate, type).then(data =>{
                 this.activeLineData = {
                     data: data,
                     key: type,
                     name: typename,
                 }
             })
+        },
+        async getActiveTotalData(){
+            await homeService.getActiveTotalData(this.currentDate).then(data =>{
+                this.activeTotalData = data.reduce((obj, item, index) =>{
+                    return {
+                        ...obj,
+                        [item.id]: item,
+                    }
+                },{}) 
+            })
+        },
+        async refreshData(){
+            this.currentDate = this.value1;
+            console.log('刷新时间'+this.currentDate)
+            await this.getActiveTotalData()
+            await this.changeActiveData('dayCount')
         }
     },
     async mounted(){
-        await homeService.getActiveTotalData().then(data =>{
-            this.activeTotalData = data.reduce((obj, item, index) =>{
-                return {
-                    ...obj,
-                    [item.id]: item,
-                }
-            },{}) 
-        })
+        this.currentDate =  $utils.formatDate(new Date(), 'yyyy-MM-dd')
+        console.log('初始化'+this.currentDate)
+        await this.getActiveTotalData()
         await this.changeActiveData('dayCount')
     }
 }

@@ -20,7 +20,12 @@
                         </dv-border-box-3>
                         <div class="rmctc-right-container">
                             <dv-border-box-3 class="rmctc-chart-1">
-                                <div style="height: 50px;width: 100%;color: #fff;fontSize: 30px">今天是</div>
+                                <div>
+                                    <div style="height: 60px;width: 100%;color: #fff;fontSize: 30px;padding: 20px 0;text-indent: 40px;">今天是</div>
+                                <div style="height: 60px;width: 100%;color: #fff;fontSize: 30px;padding: 20px 0;text-indent: 40px;">{{currentDate}}</div>
+                                </div>
+                                
+                                
                             </dv-border-box-3>
                             <dv-border-box-4 class="rmctc-chart-2" :reverse="true">
                                 <Right-Chart-1 />
@@ -68,6 +73,8 @@ export default {
     data () {
         return {
             mapData: [],
+            timer: '',
+            currentDate: '',
             config: {
                 header: ['列1', '列2', '列3'],
                 data: [
@@ -90,11 +97,21 @@ export default {
             await homeService.getAreaData().then(data =>{
                 this.mapData = data
             })
+        },
+        startTime(){
+            var today=new Date();
+            return `${today.getFullYear()}年${today.getMonth()+1}月${today.getDate()}日`
         }
+
+//             document.getElementById('txt').innerHTML=strDate;
+//             t=s
+//             }
+
     },
     async mounted(){
+        this.currentDate = this.startTime()
         await this.getData()
-    }
+    },
 }
 </script>
 

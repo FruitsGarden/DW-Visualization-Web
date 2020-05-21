@@ -13,7 +13,7 @@
                     end-placeholder="结束日期"></el-date-picker>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary">查询</el-button>
+                <el-button type="primary" @click="searchData">查询</el-button>
             </el-form-item>
         </el-form>
         
@@ -39,6 +39,7 @@
 
 <script>
 import {homeService} from '@/service/index.js'
+import {$utils} from '@/utils/index.js'
 export default {
     data(){
         return {
@@ -56,17 +57,22 @@ export default {
             return '';
         },
         changeDuration(valaue){
-            this.startDate = value[0]
-            this.endDate = value[1]
+            this.startDate = this.value1[0]
+            this.endDate = this.value1[1]
         },
-        async getData(){
-            await homeService.getRetainData().then(data =>{
+        async searchData(){
+            await this.getData(this.startDate, this.endDate)
+        },
+        async getData(startDate, endDate){
+            await homeService.getRetainData(startDate, endDate).then(data =>{
                 this.tableData = data
             })  
         }
     },
     async mounted(){
-        await this.getData()
+        let currentDate =  $utils.formatDate(new Date(), 'yyyy-MM-dd')
+        console.log('初始化'+currentDate)
+        await this.getData(currentDate, currentDate)
     }
 }
 </script>

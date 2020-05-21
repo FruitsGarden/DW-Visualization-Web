@@ -10,6 +10,7 @@ export const homeService = {
      * @param date 'YYY-MM-DD'
      */
     getActiveTotalData(date){
+        console.log('请求参数',date)
         // return axios.get(apiPathList.getActiveTotalData+`?date=${date}`)
         return Promise.resolve([
             {id: 'dayCount', title: '日活', totalData: 10},
@@ -23,6 +24,7 @@ export const homeService = {
      * @param type dayCount wkCount monCount 
      */
     getActiveData(date, type){
+        console.log('请求参数',date, type)
         // return axios.get(apiPathList.getActiveData+`?date=${date}&type=${type}`)
         if(type == 'dayCount'){
             return Promise.resolve([
@@ -56,6 +58,7 @@ export const homeService = {
      * @param {String} endDate 
      */
     getRetainData(startDate, endDate){
+        console.log('请求参数',startDate,endDate)
         // return axios.get(apiPathList.getRetainData+`?startDate=${startDate}&endDate=${endDate}`)
         return Promise.resolve([
             {create_date: '2019-01-01', new_mid_count: '65', d1: '1', d2: '2', d3: '3', d4: '4', d5: '5', d6: '6'},
@@ -74,6 +77,7 @@ export const homeService = {
      * @param {String} date 
      */
     getConvertData(date){
+        console.log('请求参数',date)
         // return axios.get(apiPathList.getConvertData+`?date=${date}`)
         return Promise.resolve([
             {name: '浏览', value: '100'},
@@ -87,6 +91,7 @@ export const homeService = {
      * @param {String} endDate 
      */
     getGMVData(startDate, endDate){
+        console.log('请求参数',startDate, endDate)
         // return axios.get(apiPathList.getGMVData+`?startDate=${startDate}&endDate=${endDate}`)
         return Promise.resolve([
             {gmv_amount: '210000', gmv_count: '1000', quarter: '2019-03-01'},
