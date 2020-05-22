@@ -16,7 +16,7 @@
                 active-text-color="#ffd04b"
                 default-active="1-1"
                 @select="changeTab" >
-                <el-submenu index="1">
+                <!-- <el-submenu index="1">
                     <template slot="title"><i class="el-icon-data-board"></i>数仓统计</template>
                     <el-menu-item
                         v-for="(item, index) in menuList"
@@ -24,12 +24,24 @@
                         
                         :index="item.index"
                         ><i :class="item.class"></i>{{item.text}}</el-menu-item>
-                </el-submenu>
+                </el-submenu> -->
+                <!-- <el-submenu index="1">
+                    <template slot="title"><i class="el-icon-data-board"></i>数仓统计</template> -->
+                    <el-menu-item
+                        v-for="(item, index) in menuList"
+                        :key="index" 
+                        
+                        :index="item.index"
+                        ><i :class="item.class"></i>{{item.text}}</el-menu-item>
+                <!-- </el-submenu> -->
             </el-menu>
         </el-aside>
         <el-container class="right-side">
 
             <div class="contain-header">
+                <el-breadcrumb separator="/" style="padding: 22px 40px;font-size: 20px;font-weight:bold;">
+                    <el-breadcrumb-item>{{headertitle}}</el-breadcrumb-item>
+                </el-breadcrumb>
                 <el-button @click="goDataV" style="position: absolute; right: 50px;top: 20px;" type="primary">切换大屏</el-button>
             </div>
             <div class="right-contains">
@@ -48,6 +60,11 @@ import {
     convertData,
     GMVData,
     areaData,
+    userConvertCount,
+    newMidCount,
+    silentCount,
+    dashboard,
+    wastageCount,
 } from './home/index.js'
 export default {
     components: {
@@ -57,23 +74,39 @@ export default {
         convertData,
         GMVData,
         areaData,
+        userConvertCount,
+        newMidCount,
+        silentCount,
+        dashboard,
+        wastageCount,
     },
     data(){
         return {
             lineData:{},
+            headertitle: '用户活跃度',
             menuList: [
-                {class: 'el-icon-pie-chart', text: '活动统计', index: '1-1', component: 'activeTotalData'},
-                {class: 'el-icon-document', text: '留存率统计', index: '1-2', component: 'retainData'},
-                {class: 'el-icon-refresh', text: '转化率统计', index: '1-3', component: 'convertData'},
-                {class: 'el-icon-s-data', text: 'GMV展示', index: '1-4', component: 'GMVData'},
-                {class: 'el-icon-location-outline', text: '地区统计', index: '1-5', component: 'areaData'},
+                {class: 'el-icon-pie-chart', text: '用户活跃度', index: '1-1', component: 'activeTotalData'},
+                {class: 'el-icon-document', text: '用户留存率', index: '1-2', component: 'retainData'},
+                {class: 'el-icon-refresh', text: '商品订单转化率', index: '1-3', component: 'convertData'},
+                {class: 'el-icon-s-data', text: 'GMV', index: '1-4', component: 'GMVData'},
+                {class: 'el-icon-location-outline', text: '地区经营分布', index: '1-5', component: 'areaData'},
+                {class: 'el-icon-user', text: '用户新鲜度', index: '1-6', component: 'userConvertCount'},
+                {class: 'el-icon-mobile-phone', text: '每日新增设备', index: '1-7', component: 'newMidCount'},
+                {class: 'el-icon-turn-off-microphone', text: '沉默用户', index: '1-8', component: 'silentCount'},
+                {class: 'el-icon-arrow-down', text: '流失用户', index: '1-9', component: 'wastageCount'},
+                {class: 'el-icon-data-analysis', text: '仪表盘', index: '1-10', component: 'dashboard'},
+                
             ],
             currentTabComponent: 'activeTotalData',
         }
     },
+    watch: {
+
+    },
     methods:{
         changeTab(index, indexPath){
             console.log(index, indexPath)
+            this.headertitle = this.menuList.find(item =>item.index == index).text
             this.currentTabComponent = this.menuList.find(item => item.index == index).component
         },
         goDataV(){

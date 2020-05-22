@@ -1,5 +1,5 @@
 <template>
-    <chart :options="lineOptions" ref="runTimes_creditChart" :style="{minHeight: '50vh',width: '100%'}"></chart>
+    <chart :options="lineOptions" ref="runTimes_creditChart" :style="{width: '100%'}"></chart>
 </template>
 
 <script>
@@ -34,35 +34,28 @@ export default {
     computed: {
         lineOptions(){
             let xAxisList = [],
-                yAxisList = [],
-                y2AxisList = [];
+                yAxisList = [];
             if(!Array.isArray(this.lineData)){
                 return {}
             }
             xAxisList = this.lineData.reduce((arr, element) => {
                 return [
                     ...arr,
-                    element.quarter
+                    element.dt
                 ]
             },[]);
 
             yAxisList = this.lineData.reduce((arr, element) => {
                 return [
                     ...arr,
-                    element.gmv_amount
-                ]
-            },[]);
-            y2AxisList = this.lineData.reduce((arr, element) => {
-                return [
-                    ...arr,
-                    element.gmv_count
+                    element.silentCount
                 ]
             },[]);
 
             return {
                 title: { 
                     show: true, //显示折线图
-                    text: `GMV`, //标题文字
+                    text: `沉默用户`, //标题文字
                     left: 'center', //配置title的位置
                     padding: [5,20,5,10] //title的padding值
                 },
@@ -98,19 +91,9 @@ export default {
                     },
                     label: {
                         show: true,
-                        position: 'inside'
-                    },
-                }, {
-                    data: y2AxisList,
-                    type: 'line',
-                    itemStyle: {
-                        color: '#ccc'
-                    },
-                    label: {
-                        show: true,
                         position: 'outside'
                     },
-                },]
+                }]
             }
         }
     }

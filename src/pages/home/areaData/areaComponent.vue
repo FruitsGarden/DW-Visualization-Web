@@ -116,6 +116,10 @@ export default {
                     name: '销量top',
                     type: 'map',
                     geoIndex: 0,
+                    // label: {
+                    //     show: true,
+                    //     position: 'inside'
+                    // },
                     // mapType: 'china',
                     // roam: true,
                     // label: {

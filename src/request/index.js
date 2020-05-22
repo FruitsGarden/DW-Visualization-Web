@@ -12,6 +12,8 @@ export const apiPathList = {
     getConvertData: window.apiRoot+'/DW/getConvertData',//转化率
     getGMVData: window.apiRoot+'/DW/getGMVData',//GMV
     getAreaData: window.apiRoot+'/DW/getAreaData',//地区统计
+
+    
     getUserConvertCount: window.apiRoot+'/DW/getUserConvertCount',//用户新鲜度
     getNewMidCount: window.apiRoot+'/DW/getNewMidCount',//每日新增设备
     getSilentCount: window.apiRoot+'/DW/getSilentCount',//沉默用户

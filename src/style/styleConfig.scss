@@ -27,6 +27,37 @@
 //     bottom: $bottom;
 //     top: $top;
 // }
+$activeColor: rgb(66, 170, 250);
+
+
+//vi主题色
+$viColor: rgb(64, 158, 255);
+$viColor3:rgba(64, 158, 255, .3);
+$viColor5:rgba(64, 158, 255, .5);
+// v-hide通用样式
+.hide{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: #fff;
+    opacity: .9;
+    top: 0;
+    left: 0;
+    z-index: 200;
+    filter: blur(3px);
+}
+.hide-text{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    font-size: 18px;
+    width: 100%;
+    color: $viColor;
+    text-align: center;
+    z-index: 201;
+
+}
 
 
 

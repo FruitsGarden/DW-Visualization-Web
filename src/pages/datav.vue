@@ -1,5 +1,5 @@
 <template>
-    <div id="data-view">
+    <div id="data-view" v-loading="is_loading">
         <dv-full-screen-container>
             <div class="main-header">
                 电商数据可视化大屏
@@ -76,6 +76,7 @@ export default {
     },
     data () {
         return {
+            is_loading: false,
             mapData: [],
             timer: '',
             currentDate: '',
@@ -94,39 +95,57 @@ export default {
             let date = '2020-05-04',
                 startDate = '2020-05-04',
                 endDate = '2020-05-04';
-            await Promise.all([
-                homeService.getActiveTotalData(date),
-                homeService.getConvertData(date),
-                homeService.getAreaData(),
-                homeService.getRetainData(),
-                homeService.getGMVData(),
+            try{
+                this.is_loading = true
+                await Promise.all([
+                    homeService.getActiveTotalData(date),
+                    homeService.getConvertData(date),
+                    homeService.getAreaData(),
+                    homeService.getRetainData(),
+                    homeService.getGMVData(),
 
-                homeService.getUserConvertCount(date),
-                homeService.getNewMidCount(date),
-                homeService.getSilentCount(date),
-                homeService.getWastageCount(date),
-            ]).then(data =>{
-                console.log(data)
-                //用户活跃数据
-                this.activeTotalData = data[0].data
-                //转化率数据
-                this.convertData = data[1].data
-                //地图数据
-                this.mapData = data[2].data
-                //底部动态列表
-                let bottomList = data[3].data.map((item, index) =>{
-                    return Object.values(item).map(it =>{
-                        return it.toString()
+                    homeService.getUserConvertCount(date),
+                    homeService.getNewMidCount(date),
+                    homeService.getSilentCount(date),
+                    homeService.getWastageCount(date),
+                ]).then(data =>{
+                    console.log(data)
+                    //用户活跃数据
+                    this.activeTotalData = data[0].data
+                    //转化率数据
+                    this.convertData = data[1].data
+                    //地图数据
+                    this.mapData = data[2].data
+                    //底部动态列表
+                    let bottomList = data[3].data.map((item, index) =>{
+                        return Object.values(item).map(it =>{
+                            return it.toString()
+                        })
                     })
+                    this.retainData = {
+                        header: ['时间', '新增用户', '一天后', '两天后', '三天后', '四天后', '五天后','六天后',],
+                        data: bottomList,
+                        index: true,
+                    }
+                    this.gmvData = data[4].data
+                    this.configData = data[8].data
+                    this.is_loading = false
+                }).catch(error =>{
+                    this.$message({
+                        type: 'error',
+                        message: error.message
+                    })
+                    this.is_loading = false
+                }).finally(() =>{
+                    this.is_loading = false
                 })
-                this.retainData = {
-                    header: ['时间', '新增用户', '一天后', '两天后', '三天后', '四天后', '五天后','六天后',],
-                    data: bottomList,
-                    index: true,
-                }
-                this.gmvData = data[4].data
-                this.configData = data[8].data
-            })
+            } catch(error){
+                this.$message({
+                    type: 'error',
+                    message: error.message
+                })
+                this.is_loading = false
+            }
         },
         startTime(){
             var today=new Date();

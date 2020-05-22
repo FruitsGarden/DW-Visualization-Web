@@ -1,5 +1,5 @@
 <template>
-    <chart :options="lineOptions" ref="runTimes_creditChart" :style="{minHeight: '50vh',width: '100%'}"></chart>
+    <chart :options="lineOptions" ref="runTimes_creditChart" :style="{width: '100%'}"></chart>
 </template>
 
 <script>
@@ -35,6 +35,7 @@ export default {
         lineOptions(){
             let xAxisList = [],
                 yAxisList = [],
+                y1AxisList = [],
                 y2AxisList = [];
             if(!Array.isArray(this.lineData)){
                 return {}
@@ -42,27 +43,33 @@ export default {
             xAxisList = this.lineData.reduce((arr, element) => {
                 return [
                     ...arr,
-                    element.quarter
+                    element.dt
                 ]
             },[]);
 
             yAxisList = this.lineData.reduce((arr, element) => {
                 return [
                     ...arr,
-                    element.gmv_amount
+                    element.uvMCount
+                ]
+            },[]);
+            y1AxisList = this.lineData.reduce((arr, element) => {
+                return [
+                    ...arr,
+                    element.newMCount
                 ]
             },[]);
             y2AxisList = this.lineData.reduce((arr, element) => {
                 return [
                     ...arr,
-                    element.gmv_count
+                    element.newMRatio
                 ]
             },[]);
 
             return {
                 title: { 
                     show: true, //显示折线图
-                    text: `GMV`, //标题文字
+                    text: `用户新鲜度`, //标题文字
                     left: 'center', //配置title的位置
                     padding: [5,20,5,10] //title的padding值
                 },
@@ -99,6 +106,18 @@ export default {
                     label: {
                         show: true,
                         position: 'inside'
+                    },
+                },{
+                    data: y1AxisList,
+                    type: 'bar',
+                    barWidth: 35,
+                    smooth: true,
+                    itemStyle: {
+                        color: 'red'
+                    },
+                    label: {
+                        show: true,
+                        position: 'outside'
                     },
                 }, {
                     data: y2AxisList,

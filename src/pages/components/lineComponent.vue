@@ -83,7 +83,8 @@ export default {
                         lineStyle: {
                             type: 'dashed'
                         }
-                    }
+                    },
+                    
                 },
                 series: [{
                     data: yAxisList,
@@ -92,13 +93,21 @@ export default {
                     smooth: true,
                     itemStyle: {
                         color: '#6395f9'
-                    }
+                    },
+                    label: {
+                        show: true,
+                        position: 'inside'
+                    },
                 }, {
                     data: yAxisList,
                     type: 'line',
                     itemStyle: {
                         color: '#ccc'
-                    }
+                    },
+                    label: {
+                        show: true,
+                        position: 'outside'
+                    },
                 },]
             }
         }
