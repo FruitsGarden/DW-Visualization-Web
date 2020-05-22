@@ -91,7 +91,7 @@ export default {
                     },
                     label: {
                         show: true,
-                        position: 'outside'
+                        position: 'inside'
                     },
                 }]
             }

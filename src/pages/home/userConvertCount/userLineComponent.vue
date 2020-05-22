@@ -117,7 +117,7 @@ export default {
                     },
                     label: {
                         show: true,
-                        position: 'outside'
+                        position: 'inside'
                     },
                 }, {
                     data: y2AxisList,

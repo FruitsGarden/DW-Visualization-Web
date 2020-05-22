@@ -88,7 +88,7 @@ export default {
                     smooth: true,
                     label: {
                         show: true,
-                        position: 'outside'
+                        position: 'inside'
                     },
                     itemStyle: {
                         color: '#6395f9'
