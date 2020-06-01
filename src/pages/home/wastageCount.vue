@@ -1,5 +1,5 @@
 <template>
-    <div style="height: calc(100vh - 64px);widdth: 100%" v-loading="is_loading">
+    <div style="height: calc(100vh - 64px);width: 1000px;margin: 0 auto;" v-loading="is_loading">
         <div style="margin-top: 100px;">
             <div style="max-width: 1000px;margin: 0 auto;padding: 20px 0;">
                 <el-date-picker

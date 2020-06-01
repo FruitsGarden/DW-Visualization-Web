@@ -1,5 +1,5 @@
 <template>
-    <div class="retainBox" style="min-height: calc(100vh - 64px); width: 100%;" v-loading="is_loading">
+    <div class="retainBox" style="min-height: calc(100vh - 64px); width: 1000px;margin: 0 auto;" v-loading="is_loading">
         <el-form :inline="true" style="padding: 20px 100px">
             <el-form-item label="时间范围">
                 <el-date-picker

@@ -1,5 +1,5 @@
 <template>
-    <chart :options="lineOptions" ref="runTimes_creditChart" :style="{width: '100%'}"></chart>
+    <chart :options="lineOptions" ref="runTimes_creditChart" :style="{width: '1000px'}"></chart>
 </template>
 
 <script>

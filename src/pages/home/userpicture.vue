@@ -1,8 +1,8 @@
 <template>
-    <div style="min-height: 100vh;width: 100%;" v-loading="is_loading">
+    <div style="min-height: 100vh;width: 1000px;margin: 0 auto;padding: 20px 0;" v-loading="is_loading">
          <el-row :gutter="12">
             <el-col 
-                :span="4" 
+                :span="6" 
                 v-for="(item, index) in currentTableData"
                 :key="index">
                 <el-card shadow="always" class="card" style="">
@@ -167,7 +167,7 @@ export default {
         display: flex;
         .title{
             height: 35px;
-            width: 200px;
+            width: 100px;
         }
         .value{
             flex: 1;
