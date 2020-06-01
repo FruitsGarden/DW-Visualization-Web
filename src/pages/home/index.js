@@ -24,6 +24,8 @@ import wastageCount from './wastageCount.vue'
 // 仪表盘
 import dashboard from './dashboard.vue'
 
+// 用户画像
+import userpicture from './userpicture.vue'
 
 export {
     activeTotalData,
@@ -36,4 +38,5 @@ export {
     silentCount,
     dashboard,
     wastageCount,
+    userpicture,
 }

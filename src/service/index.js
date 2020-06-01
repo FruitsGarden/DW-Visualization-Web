@@ -142,5 +142,11 @@ export const homeService = {
      */
     getWastageCount(date){
         return axios.get(apiPathList.getWastageCount+`?date=${date}`)
+    },
+    /**
+     * 用户画像
+     */
+    queryUserTop3Category(){
+        return axios.get(apiPathList.queryUserTop3Category)
     }
 }

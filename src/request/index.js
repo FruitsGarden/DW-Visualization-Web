@@ -18,6 +18,7 @@ export const apiPathList = {
     getNewMidCount: window.apiRoot+'/DW/getNewMidCount',//每日新增设备
     getSilentCount: window.apiRoot+'/DW/getSilentCount',//沉默用户
     getWastageCount: window.apiRoot+'/DW/getWastageCount',//流失用户
+    queryUserTop3Category: window.apiRoot+'/DW/queryUserTop3Category'
 }
 
 

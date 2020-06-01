@@ -64,6 +64,7 @@ import {
     newMidCount,
     silentCount,
     dashboard,
+    userpicture,
     wastageCount,
 } from './home/index.js'
 export default {
@@ -79,25 +80,27 @@ export default {
         silentCount,
         dashboard,
         wastageCount,
+        userpicture,
     },
     data(){
         return {
             lineData:{},
             headertitle: '用户活跃度',
             menuList: [
-                {class: 'el-icon-pie-chart', text: '用户活跃度', index: '1-1', component: 'activeTotalData'},
-                {class: 'el-icon-document', text: '用户留存率', index: '1-2', component: 'retainData'},
-                {class: 'el-icon-refresh', text: '商品订单转化率', index: '1-3', component: 'convertData'},
-                {class: 'el-icon-s-data', text: 'GMV', index: '1-4', component: 'GMVData'},
-                {class: 'el-icon-location-outline', text: '地区经营分布', index: '1-5', component: 'areaData'},
-                {class: 'el-icon-user', text: '用户新鲜度', index: '1-6', component: 'userConvertCount'},
-                {class: 'el-icon-mobile-phone', text: '每日新增设备', index: '1-7', component: 'newMidCount'},
-                {class: 'el-icon-turn-off-microphone', text: '沉默用户', index: '1-8', component: 'silentCount'},
-                {class: 'el-icon-arrow-down', text: '流失用户', index: '1-9', component: 'wastageCount'},
-                {class: 'el-icon-data-analysis', text: '仪表盘', index: '1-10', component: 'dashboard'},
+                {class: 'el-icon-data-analysis', text: '仪表盘', index: '1-1', component: 'dashboard'},
+                {class: 'el-icon-pie-chart', text: '用户活跃度', index: '1-2', component: 'activeTotalData'},
+                {class: 'el-icon-document', text: '用户留存率', index: '1-3', component: 'retainData'},
+                {class: 'el-icon-refresh', text: '商品订单转化率', index: '1-4', component: 'convertData'},
+                {class: 'el-icon-s-data', text: 'GMV', index: '1-5', component: 'GMVData'},
+                {class: 'el-icon-location-outline', text: '地区经营分布', index: '1-6', component: 'areaData'},
+                {class: 'el-icon-user', text: '用户新鲜度', index: '1-7', component: 'userConvertCount'},
+                {class: 'el-icon-mobile-phone', text: '每日新增设备', index: '1-8', component: 'newMidCount'},
+                {class: 'el-icon-turn-off-microphone', text: '沉默用户', index: '1-9', component: 'silentCount'},
+                {class: 'el-icon-arrow-down', text: '流失用户', index: '1-10', component: 'wastageCount'},
+                {class: 'el-icon-user', text: '用户画像', index: '1-11', component: 'userpicture'},
                 
             ],
-            currentTabComponent: 'activeTotalData',
+            currentTabComponent: 'dashboard',
         }
     },
     watch: {
